@@ -32,30 +32,14 @@ pipeline {
                 '''
         }
     }
-  stage('Docker Image Build') {
-      steps{
-         sh "docker build -t dashboard_service:latest ."
+  stage('Docker Image Build Push') {
+        steps{
+           sh '''docker build -t 10.0.1.11:5000/dashboard_service:latest .
+                 docker push 10.0.1.11:5000/dashboard_service
+                 docker rmi 10.0.1.11:5000/dashboard_service
+              '''
+        }
       }
-    }
-    stage('Docker save'){
-        steps{
-            sh "docker save dashboard_service:latest>dashboard_service.tar"
-        }
-    }
- 
-    stage('Upload to S3'){
-        steps{
-            withAWS(region:'us-east-1',credentials:'aws-cred')
-            {
-                s3Upload(bucket:'bucketforsprint',file:'dashboard_service.tar',workingDir:'./');
-            }
-        }
-    }
-    stage('Tar remove'){
-        steps{
-            sh "rm dashboard_service.tar"
-        }
-    }
   }
  
 }
