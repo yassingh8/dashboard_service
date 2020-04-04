@@ -58,7 +58,7 @@ pipeline {
     {
         steps{
                 sshagent(credentials:['token_key']){
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.12 'sudo docker pull 10.0.1.175:5000/dashboard_service'"
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.108 'sudo docker pull 10.0.1.175:5000/dashboard_service'"
         }
         }
     }
@@ -67,7 +67,7 @@ pipeline {
     {
         steps{
                 sshagent(credentials:['token_key']){
-                    sh "ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.12  'sudo docker stop dashboard && sudo docker rm dashboard;bash -l'"
+                    sh "ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.108  'sudo docker stop dashboard && sudo docker rm dashboard;bash -l'"
                 }
         }
     }
@@ -76,7 +76,7 @@ pipeline {
     {
         steps{
             sshagent(credentials:['token_key']){
-                  sh "ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.12  'sudo docker run -d --name dashboard 10.0.1.175:5000/dashboard_service;bash -l'"
+                  sh "ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.108  'sudo docker run -d --name dashboard 10.0.1.175:5000/dashboard_service;bash -l'"
             }
         }
     }
@@ -84,8 +84,8 @@ pipeline {
     {
         steps{
             sshagent(credentials:['token_key']){
-              //    sh "ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.12  'sudo docker image tag 10.0.1.175:5000/dashboard_service dashboard_service'"
-                   sh "ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.12  'sudo docker image prune -f'"
+              //    sh "ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.108  'sudo docker image tag 10.0.1.175:5000/dashboard_service dashboard_service'"
+                   sh "ssh -o StrictHostKeyChecking=no ubuntu@10.0.1.108  'sudo docker image prune -f'"
             }
         }
     }
